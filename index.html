@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>TremendaLectura</title>
+  </head>
+
+  <body>
+    <h1>TremendaLectura</h1>
+    <h2>Bookmarklet</h2>
+    <p>Arrastra el link a la barra de favoritos y clickealo viendo alguna pagina</p>
+
+    <a id="bookmarklet" href="">TremendaLectura</a>
+
+    <h2>Prueba</h2>
+    <p>Hace click en el link de arriba</p>
+    <ul>
+      <li>Lali Espósito</li>
+      <li>María Becerra</li>
+      <li>Nicki Nicole</li>
+      <li>Bizarrap</li>
+      <li>Ciro y los persas</li>
+      <li>No Te Va A Gustar</li>
+      <li>Las Pastillas Del Abuelo</li>
+      <li>Fito Paez</li>
+      <li>Él Mató a un Policía Motorizado</li>
+      <li>Abel Pintos</li>
+      <li>Divididos</li>
+      <li>La Mancha de Rolando</li>
+      <li>Santiago Maldonado</li>
+      <li>Julia Mengolini</li>
+      <li>Horacio Larreta</li>
+      <li>Pedro Rosemblat</li>
+    </ul>
+
+    <h2>Version descomprimida:</h2>
+
+    <pre>
+      (function(src){
+        var script = document.createElement('script');
+        script.src = src + '?' + new Date().toISOString().slice(2,10);
+        document.body.appendChild(script);
+      })('https://tremendacarucha.github.io/tremenda-lectura/bookmarklet.js')
+    </pre>
+
+    <h2>Version estatica:</h2>
+    <p>Esta version puede funcionar en mas sitios, como X, pero no recibe actualizaciones</p>
+    
+    <a id="bookmarklet-static" href="">TremendaLectura(S)</a>
+
+    <h2>Links</h2>
+    <ul>
+      <li>Para ver el bookmarklet: <a id="js" href="https://tremendacarucha.github.io/tremenda-lectura/bookmarklet.js"
+          target="_blank">bookmarklet.js</a></li>
+      <li>Para proponer cambios: <a href="https://github.com/TremendaCarucha/tremenda-lectura/issues/new"
+          target="_blank">Issues</a></li>
+      <li>Mi X/Twitter: <a href="https://x.com/TremendaCarucha" target="_blank">TremendaCarucha</a></li>
+    </ul>
+    <script>
+      function toBookmarklet(code) {
+        return 'javascript:' + code
+          .replace(/(?<!:)\/\/.*/g, '')
+          .replace(/^ +/mg, '')
+          .replace(/ ([+=]|!==|===|=>) /g, '$1')
+          .replace(/([:,{]) /g, '$1')
+          .replace(/ ([(}])/g, '$1')
+          .replace(/\n/g, '')
+      }
+
+      const pre = document.querySelector('pre')
+      const code = pre.textContent
+      const bookmarklet = document.getElementById('bookmarklet')
+      bookmarklet.href = toBookmarklet(code)
+
+      const bookmarkletStatic = document.getElementById('bookmarklet-static')
+      const js = document.getElementById('js')
+      
+      fetch(js.href).then(response => response.text()).then(code => {
+        bookmarkletStatic.href = toBookmarklet(code)
+      })
+    </script>
+  </body>
+
+</html>
